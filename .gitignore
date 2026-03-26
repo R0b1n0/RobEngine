@@ -1,0 +1,110 @@
+# =============================================================================
+# C++ / SFML Project — .gitignore
+# =============================================================================
+ 
+# -------------------------
+# Compiled output
+# -------------------------
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.pdb
+*.ilk
+*.exp
+ 
+# -------------------------
+# Build directories
+# -------------------------
+build/
+bin/
+out/
+dist/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+ 
+# -------------------------
+# SFML specific
+# -------------------------
+# SFML local install / vendored libs (if not tracked intentionally)
+sfml/
+SFML/
+libs/
+lib/
+ 
+# -------------------------
+# IDEs & editors
+# -------------------------
+ 
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
+ipch/
+ 
+# CLion / JetBrains
+.idea/
+*.iml
+ 
+# VS Code
+.vscode/
+*.code-workspace
+ 
+# Qt Creator
+*.pro.user
+*.qbs.user
+ 
+# Eclipse
+.cproject
+.project
+.settings/
+ 
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+ 
+# -------------------------
+# OS generated
+# -------------------------
+ 
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+ 
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ 
+# Linux
+*~
+.directory
+ 
+# -------------------------
+# Misc
+# -------------------------
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+.cache/
