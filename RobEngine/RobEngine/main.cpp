@@ -1,47 +1,5 @@
 #include "main.h"
 
-
-struct  Mesh
-{
-	std::vector<Triangle> triangles;
-	bool LoadFromObjectFile(std::string sFilename)
-	{
-		std::ifstream f(sFilename);
-		if (!f.is_open())
-			return false;
-
-		// Local cache of verts
-		std::vector<Vec3> verts;
-
-		while (!f.eof())
-		{
-			char line[128];
-			f.getline(line, 128);
-
-			std::stringstream s;
-			s << line;
-
-			char junk;
-
-			if (line[0] == 'v')
-			{
-				Vec3 v;
-				s >> junk >> v.x >> v.y >> v.z;
-				verts.push_back(v);
-			}
-
-			if (line[0] == 'f')
-			{
-				int f[3];
-				s >> junk >> f[0] >> f[1] >> f[2];
-				triangles.push_back({ verts[f[0] - 1], verts[f[1] - 1], verts[f[2] - 1] });
-			}
-		}
-
-		return true;
-	}
-};
-
 float pi = 3.14159f;
 sf::Color wireFrameColor = sf::Color::Cyan;
 sf::Color clippedColor = sf::Color::Magenta;
@@ -53,7 +11,6 @@ enum ERenderMode
 	wireFrame = 1 << 1,
 	debug = 1 << 2,
 	clipped = 1 << 3
-
 };
 
 void SetRenderMode(int mode, bool state)
@@ -68,7 +25,6 @@ void ToogleRenderMode(ERenderMode mode)
 {
 	SetRenderMode(mode, !(renderMode & mode));
 }
-
 
 int main()
 {
@@ -106,15 +62,6 @@ int main()
 	Vec3 up{ 0.0f, 1.0f,0.0f };
 	Vec3 right{ 1.0f, 0.0f,0.0f };
 	Vec3 forward{ 0.0f, 0.0f, 1.0f };
-
-	/*mesh.triangles =
-	{
-		{
-			forward,
-			up,
-			right
-		}
-	};*/
 
 	float fTheta = 0;
 
