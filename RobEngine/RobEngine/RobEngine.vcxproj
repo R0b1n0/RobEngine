@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\MathB\Matrice.h" />
-    <ClInclude Include="Headers\MathB\Mesh.h" />
-    <ClInclude Include="Headers\MathB\Utils.h" />
-    <ClInclude Include="Headers\MathB\Vector.h" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
+    <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\mathB\Matrice.h" />
+    <ClInclude Include="include\mathB\Mesh.h" />
+    <ClInclude Include="include\mathB\Utils.h" />
+    <ClInclude Include="include\mathB\Vector.h" />
+    <ClInclude Include="include\renderer\Camera.h" />
+    <ClInclude Include="include\renderer\Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

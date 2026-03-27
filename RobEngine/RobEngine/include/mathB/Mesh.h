@@ -1,5 +1,9 @@
 #pragma once
 #include "Vector.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <algorithm>
 
 struct Triangle
 {
@@ -54,7 +58,7 @@ struct  Mesh
 /// <param name="planeP :">point within the said plane.</param>
 /// <param name="planeN :">plane Normal.</param>
 /// <returns>True if there is an intersection.</returns>
-bool TryGetLinePlaneIntersection(Vec3 planeP, Vec3 planeN, Vec3 lineStart, Vec3 lineEnd, Vec3& result)
+inline bool TryGetLinePlaneIntersection(Vec3 planeP, Vec3 planeN, Vec3 lineStart, Vec3 lineEnd, Vec3& result)
 {
 	planeN.Normalize();
 	Vec3 line = lineEnd - lineStart;
@@ -74,7 +78,7 @@ bool TryGetLinePlaneIntersection(Vec3 planeP, Vec3 planeN, Vec3 lineStart, Vec3 
 	result = lineStart + line * t;
 }
 
-int ClipTriangleAgainstSpace(Vec3 planeP, Vec3 planeN, Triangle& in_tri, Triangle& out_tri1, Triangle& out_tri2)
+inline int ClipTriangleAgainstSpace(Vec3 planeP, Vec3 planeN, Triangle& in_tri, Triangle& out_tri1, Triangle& out_tri2)
 {
 	planeN.Normalize();
 

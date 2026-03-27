@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Headers\MathB\Matrice.h">
-      <Filter>include\mathB</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\MathB\Mesh.h">
-      <Filter>include\mathB</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\MathB\Utils.h">
-      <Filter>include\mathB</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\MathB\Vector.h">
-      <Filter>include\mathB</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{69112c3b-34e6-419e-94ef-7ce802c3ab21}</UniqueIdentifier>
     </Filter>
@@ -44,5 +30,31 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\Renderer.cpp">
+      <Filter>src\renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\mathB\Matrice.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mathB\Mesh.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mathB\Utils.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mathB\Vector.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="include\main.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\Renderer.h">
+      <Filter>include\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\Camera.h">
+      <Filter>include\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
