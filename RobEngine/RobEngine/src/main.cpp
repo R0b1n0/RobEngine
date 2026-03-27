@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../include/main.h"
 
 float pi = 3.14159f;
 sf::Color wireFrameColor = sf::Color::Cyan;
@@ -57,7 +57,7 @@ int main()
 
 	//MeshData
 	Mesh mesh;
-	mesh.LoadFromObjectFile("mountains.obj");
+	mesh.LoadFromObjectFile("assets/models/mountains.obj");
 
 	Vec3 up{ 0.0f, 1.0f,0.0f };
 	Vec3 right{ 1.0f, 0.0f,0.0f };

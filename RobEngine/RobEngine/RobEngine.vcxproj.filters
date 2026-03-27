@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Headers\MathB\Matrice.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\MathB\Mesh.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\MathB\Utils.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\MathB\Vector.h">
+      <Filter>include\mathB</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{69112c3b-34e6-419e-94ef-7ce802c3ab21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{1b187744-c59e-4dbf-9978-321df0127e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\mathB">
+      <UniqueIdentifier>{7eab1e9c-be01-47ec-a4e7-5099883d2ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\renderer">
+      <UniqueIdentifier>{053dd972-158b-4d5b-b231-6ddf3cccfa78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{ae052ef4-2b23-48a6-b53b-0d9ce30be564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core">
+      <UniqueIdentifier>{efb67427-20b3-42e7-a5d4-a9b42fcfa520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\renderer">
+      <UniqueIdentifier>{d508937b-1f3a-44d3-91be-06f8fa6e41a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\mathB">
+      <UniqueIdentifier>{c56d8a50-089a-4779-a440-07d21b82c855}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
