@@ -5,9 +5,10 @@ Renderer::Renderer(sf::RenderWindow* window)
 	this->window = window;
 	camera = Camera(0.1f,1000.0f,50.0f, (float)window->getSize().y / (float)window->getSize().x);
 	mesh = Mesh();
-	mesh.LoadFromObjectFile("assets/Models/teapot.obj");
+	mesh.LoadFromObjectFile("assets/Models/mountains.obj");
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
+	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame);
 	UpdateMatrices();
 }
 
@@ -127,11 +128,11 @@ void Renderer::Render()
 				case 0:
 					nTrisToAdd = ClipTriangleAgainstSpace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, test, clipped[0], clipped[1]); break;
 				case 1:
-					nTrisToAdd = ClipTriangleAgainstSpace({ 0.0f, (float)window->getSize().y - 1, 0.0f }, { 0.0f, -1.0f, 0.0f }, test, clipped[0], clipped[1]); break;
+					nTrisToAdd = ClipTriangleAgainstSpace({ 0.0f, (float)window->getSize().y , 0.0f }, { 0.0f, -1.0f, 0.0f }, test, clipped[0], clipped[1]); break;
 				case 2:
 					nTrisToAdd = ClipTriangleAgainstSpace({ 0.0f, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f }, test, clipped[0], clipped[1]); break;
 				case 3:
-					nTrisToAdd = ClipTriangleAgainstSpace({ (float)window->getSize().x - 1, 0.0f, 0.0f }, { -1.0f, 0.0f, 0.0f }, test, clipped[0], clipped[1]); break;
+					nTrisToAdd = ClipTriangleAgainstSpace({ (float)window->getSize().x , 0.0f, 0.0f }, { -1.0f, 0.0f, 0.0f }, test, clipped[0], clipped[1]); break;
 				}
 
 				for (int w = 0; w < nTrisToAdd; w++)

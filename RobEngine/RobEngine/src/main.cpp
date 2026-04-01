@@ -2,7 +2,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode({ winWidth,  winHeight }), "TerrainGen");
+	sf::RenderWindow window(sf::VideoMode({ winWidth,  winHeight }), "RobEngine");
 
 	Renderer renderer = Renderer(&window);
 
