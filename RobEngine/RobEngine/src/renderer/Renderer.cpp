@@ -8,7 +8,7 @@ Renderer::Renderer(sf::RenderWindow* window)
 	mesh.LoadFromObjectFile("assets/Models/mountains.obj");
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
-	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame);
+	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame + ERenderMode::clipped);
 	UpdateMatrices();
 }
 

@@ -2,7 +2,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode({ winWidth,  winHeight }), "RobEngine");
+	sf::RenderWindow window(sf::VideoMode({ winWidth,  winHeight }), "RobEngine :D ");
 
 	Renderer renderer = Renderer(&window);
 
@@ -20,8 +20,6 @@ int main()
 	Vec3 up{ 0.0f, 1.0f,0.0f };
 	Vec3 right{ 1.0f, 0.0f,0.0f };
 	Vec3 forward{ 0.0f, 0.0f, 1.0f };
-
-	float fTheta = 0;
 
 	sf::Clock clock;
 
