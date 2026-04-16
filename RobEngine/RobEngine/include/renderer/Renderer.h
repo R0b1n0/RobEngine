@@ -1,8 +1,11 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+
 #include "Camera.h"
 #include "../mathB/Matrice.h"
 #include "../mathB/Mesh.h"
+#include "Color.h"
+
+namespace sf { class RenderWindow; }
 
 class Renderer
 {
@@ -13,8 +16,8 @@ private :
 	Mat4x4 matProj;
 	Mesh mesh;
 
-	sf::Color wireFrameColor = sf::Color::Cyan;
-	sf::Color clippedColor = sf::Color::Magenta;
+	Color wireFrameColor {0,255,255};
+	Color clippedColor {255,0,255};
 
 	Vec3 dirLight{ 0,0.5f,-1 };
 

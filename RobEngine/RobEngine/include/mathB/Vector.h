@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 struct Vec3
 {
 	// w helps with matrice calculation

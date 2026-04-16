@@ -4,12 +4,32 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <vector>
+#include "../renderer/Color.h"
+
 
 struct Triangle
 {
 	Vec3 p[3]{ 0 };
-	sf::Color col = sf::Color::White;
+	Color color{ 255,255,255 };
+public:
+	Triangle(){}
+	Triangle(Vec3 vertices[], Color col = Color{ 255,255,255 }) 
+	{
+		p[0] = vertices[0];
+		p[1] = vertices[1];
+		p[2] = vertices[2];
+		color = col;
+	}
+	Triangle(Vec3 a, Vec3 b, Vec3 c, Color col = Color{ 255,255,255 })
+	{
+		p[0] = a;
+		p[1] = b;
+		p[2] = c;
+		color = col;
+	}
 };
+
 struct  Mesh
 {
 	std::vector<Triangle> triangles;
@@ -43,7 +63,7 @@ struct  Mesh
 			{
 				int f[3];
 				s >> junk >> f[0] >> f[1] >> f[2];
-				triangles.push_back({ verts[f[0] - 1], verts[f[1] - 1], verts[f[2] - 1] });
+				triangles.push_back(Triangle{ verts[f[0] - 1], verts[f[1] - 1], verts[f[2] - 1] });
 			}
 		}
 
@@ -116,7 +136,7 @@ inline int ClipTriangleAgainstSpace(Vec3 planeP, Vec3 planeN, Triangle& in_tri, 
 
 	if (nInsidePointCount == 1 && nOutsidePointCount == 2)
 	{
-		out_tri1.col = in_tri.col;
+		out_tri1.color = in_tri.color;
 
 		out_tri1.p[0] = *inside_points[0];
 
@@ -128,8 +148,8 @@ inline int ClipTriangleAgainstSpace(Vec3 planeP, Vec3 planeN, Triangle& in_tri, 
 
 	if (nInsidePointCount == 2 && nOutsidePointCount == 1)
 	{
-		out_tri1.col = in_tri.col;
-		out_tri2.col = in_tri.col;
+		out_tri1.color = in_tri.color;
+		out_tri2.color = in_tri.color;
 
 		out_tri1.p[0] = *inside_points[0];
 		out_tri1.p[1] = *inside_points[1];

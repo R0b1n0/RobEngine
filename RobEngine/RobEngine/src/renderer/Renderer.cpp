@@ -1,4 +1,6 @@
 #include "../../include/renderer/Renderer.h"
+#include <SFML/Graphics.hpp>
+#include <cmath>
 
 Renderer::Renderer(sf::RenderWindow* window)
 {
@@ -84,7 +86,7 @@ void Renderer::Render()
 					projected.p[i] *= normalize;
 				}
 
-				projected.col = sf::Color(clipped[i].col.r * lightF, clipped[i].col.g * lightF, clipped[i].col.b * lightF, 255);
+				projected.color = Color(clipped[i].color.r * lightF, clipped[i].color.g * lightF, clipped[i].color.b * lightF, 255);
 
 				toRender.push_back(projected);
 			}
@@ -150,7 +152,7 @@ void Renderer::Render()
 				for (int i = 0; i < 4; i++)
 				{
 					clipped[i].position = sf::Vector2(t.p[i % 3].x, window->getSize().y - t.p[i % 3].y);
-					clipped[i].color = clippedColor;
+					clipped[i].color = sf::Color(clippedColor.r, clippedColor.g, clippedColor.b);
 				}
 				window->draw(clipped);
 			}
@@ -160,7 +162,7 @@ void Renderer::Render()
 				sf::VertexArray tri(sf::PrimitiveType::Triangles, 3);
 				for (int i = 0; i < 3; i++) {
 					tri[i].position = sf::Vector2(t.p[i].x, window->getSize().y - t.p[i].y);
-					tri[i].color = t.col;
+					tri[i].color = sf::Color(t.color.r, t.color.g, t.color.b);
 				}
 				window->draw(tri);
 			}
@@ -171,13 +173,13 @@ void Renderer::Render()
 			//WireFrame
 			sf::VertexArray wireFrame(sf::PrimitiveType::LineStrip, 4);
 			wireFrame[0].position = sf::Vector2(tri.p[0].x, window->getSize().y - tri.p[0].y);
-			wireFrame[0].color = wireFrameColor;
+			wireFrame[0].color = sf::Color(wireFrameColor.r, wireFrameColor.g, wireFrameColor.b);
 			wireFrame[1].position = sf::Vector2(tri.p[1].x, window->getSize().y - tri.p[1].y);
-			wireFrame[1].color = wireFrameColor;
+			wireFrame[1].color = sf::Color(wireFrameColor.r, wireFrameColor.g, wireFrameColor.b);
 			wireFrame[2].position = sf::Vector2(tri.p[2].x, window->getSize().y - tri.p[2].y);
-			wireFrame[2].color = wireFrameColor;
+			wireFrame[2].color = sf::Color(wireFrameColor.r, wireFrameColor.g, wireFrameColor.b);
 			wireFrame[3].position = sf::Vector2(tri.p[0].x, window->getSize().y - tri.p[0].y);
-			wireFrame[3].color = wireFrameColor;
+			wireFrame[3].color = sf::Color(wireFrameColor.r, wireFrameColor.g, wireFrameColor.b);
 			window->draw(wireFrame);
 		}
 	}

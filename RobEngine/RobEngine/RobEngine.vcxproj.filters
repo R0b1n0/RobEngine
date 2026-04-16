@@ -56,6 +56,9 @@
     <ClInclude Include="include\renderer\Camera.h">
       <Filter>include\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="include\renderer\Color.h">
+      <Filter>include\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

@@ -10,3 +10,5 @@
 
 const int winHeight = 1000;
 const int winWidth = 1000;
+
+//TODO les includes sont encore en chemins relatifs :/ 

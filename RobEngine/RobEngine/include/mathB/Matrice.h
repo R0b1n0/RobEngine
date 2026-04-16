@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector.h"
+#include <cmath>
 
 struct Mat4x4
 {

@@ -149,6 +149,7 @@
     <ClInclude Include="include\mathB\Utils.h" />
     <ClInclude Include="include\mathB\Vector.h" />
     <ClInclude Include="include\renderer\Camera.h" />
+    <ClInclude Include="include\renderer\Color.h" />
     <ClInclude Include="include\renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
