@@ -13,8 +13,8 @@ struct Triangle
 	Vec3 p[3]{ 0 };
 	Color color{ 255,255,255 };
 public:
-	Triangle(){}
-	Triangle(Vec3 vertices[], Color col = Color{ 255,255,255 }) 
+	Triangle() {}
+	Triangle(Vec3 vertices[], Color col = Color{ 255,255,255 })
 	{
 		p[0] = vertices[0];
 		p[1] = vertices[1];
@@ -35,6 +35,8 @@ struct  Mesh
 	std::vector<Triangle> triangles;
 	bool LoadFromObjectFile(std::string sFilename)
 	{
+		//See https://cs418.cs.illinois.edu/website/text/obj.html#centering
+
 		std::ifstream f(sFilename);
 		if (!f.is_open())
 			return false;
@@ -48,12 +50,13 @@ struct  Mesh
 			f.getline(line, 128);
 
 			std::stringstream s;
-			s << line;
 
 			char junk;
 
-			if (line[0] == 'v')
+			//Only consider vertices for now
+			if (line[0] == 'v' && line[1] == ' ')
 			{
+				s << line;
 				Vec3 v;
 				s >> junk >> v.x >> v.y >> v.z;
 				verts.push_back(v);
@@ -61,9 +64,40 @@ struct  Mesh
 
 			if (line[0] == 'f')
 			{
-				int f[3];
-				s >> junk >> f[0] >> f[1] >> f[2];
-				triangles.push_back(Triangle{ verts[f[0] - 1], verts[f[1] - 1], verts[f[2] - 1] });
+				bool escape = false;
+
+				//for now just use the indexes, trim the rest
+				for (auto& character : line)
+				{
+					if (character == '/')
+					{
+						escape = true;
+						continue;
+					}
+					else if (escape && character == ' ')
+					{
+						escape = false;
+					}
+
+					if (!escape)
+						s << character;
+				}
+
+				//Remove the first token
+				s >> junk;
+
+				//int tri[3]{0};
+				std::vector<int> indices{};
+				int index = 0;
+
+				while (s >> index) {
+					indices.push_back(index);
+				}
+
+				for (int i = 1; i < indices.size() - 1; i++)
+				{
+					triangles.push_back(Triangle{ verts[indices[0] - 1], verts[indices[i] - 1], verts[indices[i+1] - 1] });
+				}
 			}
 		}
 

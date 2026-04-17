@@ -7,13 +7,11 @@ int main()
 	Renderer renderer = Renderer(&window);
 
 	Mesh mesh = Mesh();
-	mesh.LoadFromObjectFile("assets/Models/mountains.obj");
-	Mesh teapot = Mesh();
-	teapot.LoadFromObjectFile("assets/Models/teapot.obj");
+	mesh.LoadFromObjectFile("assets/Models/teapot.obj");
+	
 
-	renderer.SetRenderMode(Renderer::ERenderMode::wireFrame);
+	//renderer.SetRenderMode(Renderer::ERenderMode::wireFrame);
 	renderer.RegisterMesh(&mesh);
-	renderer.RegisterMesh(&teapot);
 
 	//Camera param
 	Vec3 cameraPos{};
