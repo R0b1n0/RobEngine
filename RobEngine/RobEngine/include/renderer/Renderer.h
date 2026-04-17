@@ -14,12 +14,12 @@ private :
 	sf::RenderWindow* window;
 
 	Mat4x4 matProj;
-	Mesh mesh;
 
 	Color wireFrameColor {0,255,255};
 	Color clippedColor {255,0,255};
 
 	Vec3 dirLight{ 0,0.5f,-1 };
+	std::vector<Mesh*> visibleMesh;
 
 public : 
 	enum ERenderMode
@@ -33,6 +33,8 @@ public :
 
 public : 
 	Renderer(sf::RenderWindow* window);
+	Renderer(unsigned int width, unsigned int height, std::string name);
+	~Renderer();
 	void SetRenderMode(int mode, bool state = true)
 	{
 		if (state)
@@ -45,6 +47,7 @@ public :
 		SetRenderMode(mode, !(renderMode & mode));
 	}
 	void Render();
+	void RegisterMesh(Mesh* mesh);
 
 private : 
 	void UpdateMatrices();

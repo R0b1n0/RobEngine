@@ -6,12 +6,19 @@ Renderer::Renderer(sf::RenderWindow* window)
 {
 	this->window = window;
 	camera = Camera(0.1f,1000.0f,50.0f, (float)window->getSize().y / (float)window->getSize().x);
-	mesh = Mesh();
-	mesh.LoadFromObjectFile("assets/Models/mountains.obj");
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
-	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame + ERenderMode::clipped);
+	SetRenderMode(ERenderMode::shaded);
 	UpdateMatrices();
+}
+
+Renderer::Renderer(unsigned int width, unsigned int height, std::string name) : Renderer( new sf::RenderWindow(sf::VideoMode({ width,  height }), name))
+{
+}
+
+Renderer::~Renderer()
+{
+	delete(window);
 }
 
 void Renderer::Render()
@@ -29,69 +36,73 @@ void Renderer::Render()
 	std::vector<Triangle> toRender;
 
 	//Process MeshData
-	for (auto& tri : mesh.triangles)
+	for (auto& mesh : visibleMesh)
 	{
-		Triangle projected, transformed, viewed;
-
-		//Aply Object Transform
-		transformed.p[0] = world.Multiply(tri.p[0]);
-		transformed.p[1] = world.Multiply(tri.p[1]);
-		transformed.p[2] = world.Multiply(tri.p[2]);
-
-		//Before rendering, check normals
-		Vec3 A = transformed.p[1] - transformed.p[0];
-		Vec3 B = transformed.p[2] - transformed.p[0];
-		Vec3 normal = Vec3::CrossProduct(A, B).Normalize();
-
-		Vec3 cam2Vert = (transformed.p[0] - camera.cameraPos);
-
-		//Check if the triangle is facing the camera 
-		if (Vec3::DotProduct(cam2Vert, normal) < 0.0f)
+		for (auto& tri : mesh->triangles)
 		{
-			//Put it in view space 
-			viewed.p[0] = camera.matView.Multiply(transformed.p[0]);
-			viewed.p[1] = camera.matView.Multiply(transformed.p[1]);
-			viewed.p[2] = camera.matView.Multiply(transformed.p[2]);
+			Triangle projected, transformed, viewed;
 
-			//Clip with the near plane 
-			int nClippedTriangles = 0;
-			Triangle clipped[2];
-			nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera.fNear }, { 0.0f, 0.0f, 1.0f }, viewed, clipped[0], clipped[1]);
+			//Aply Object Transform
+			transformed.p[0] = world.Multiply(tri.p[0]);
+			transformed.p[1] = world.Multiply(tri.p[1]);
+			transformed.p[2] = world.Multiply(tri.p[2]);
 
-			//Apply the rest of the algorithm for each new tri
-			for (int i = 0; i < nClippedTriangles; i++)
+			//Before rendering, check normals
+			Vec3 A = transformed.p[1] - transformed.p[0];
+			Vec3 B = transformed.p[2] - transformed.p[0];
+			Vec3 normal = Vec3::CrossProduct(A, B).Normalize();
+
+			Vec3 cam2Vert = (transformed.p[0] - camera.cameraPos);
+
+			//Check if the triangle is facing the camera 
+			if (Vec3::DotProduct(cam2Vert, normal) < 0.0f)
 			{
-				//Apply projection matrix
-				projected.p[0] = matProj.Multiply(clipped[i].p[0]);
-				projected.p[1] = matProj.Multiply(clipped[i].p[1]);
-				projected.p[2] = matProj.Multiply(clipped[i].p[2]);
+				//Put it in view space 
+				viewed.p[0] = camera.matView.Multiply(transformed.p[0]);
+				viewed.p[1] = camera.matView.Multiply(transformed.p[1]);
+				viewed.p[2] = camera.matView.Multiply(transformed.p[2]);
 
-				//Manual Perspectiv divide 
-				for (int i = 0; i < 3; i++)
+				//Clip with the near plane 
+				int nClippedTriangles = 0;
+				Triangle clipped[2];
+				nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera.fNear }, { 0.0f, 0.0f, 1.0f }, viewed, clipped[0], clipped[1]);
+
+				//Apply the rest of the algorithm for each new tri
+				for (int i = 0; i < nClippedTriangles; i++)
 				{
-					if (projected.p[i].w == 0)
-						continue;
-					projected.p[i] /= projected.p[i].w;
+					//Apply projection matrix
+					projected.p[0] = matProj.Multiply(clipped[i].p[0]);
+					projected.p[1] = matProj.Multiply(clipped[i].p[1]);
+					projected.p[2] = matProj.Multiply(clipped[i].p[2]);
+
+					//Manual Perspectiv divide 
+					for (int i = 0; i < 3; i++)
+					{
+						if (projected.p[i].w == 0)
+							continue;
+						projected.p[i] /= projected.p[i].w;
+					}
+
+					//Process light 
+					float lightF = Max(0.1f, Min(Vec3::DotProduct(dirLight, normal), 0.9f));
+
+					//Image space 2 ScreenCoordinate
+					Vec3 center{ 1,1,0 };
+					Vec3 normalize{ 0.5f * (float)window->getSize().x , 0.5f * (float)window->getSize().y, 1.0f };
+					for (int i = 0; i < 3; i++)
+					{
+						projected.p[i] += center;
+						projected.p[i] *= normalize;
+					}
+
+					projected.color = Color(clipped[i].color.r * lightF, clipped[i].color.g * lightF, clipped[i].color.b * lightF, 255);
+
+					toRender.push_back(projected);
 				}
-
-				//Process light 
-				float lightF = Max(0.1f, Min(Vec3::DotProduct(dirLight, normal), 0.9f));
-
-				//Image space 2 ScreenCoordinate
-				Vec3 center{ 1,1,0 };
-				Vec3 normalize{ 0.5f * (float)window->getSize().x , 0.5f * (float)window->getSize().y, 1.0f };
-				for (int i = 0; i < 3; i++)
-				{
-					projected.p[i] += center;
-					projected.p[i] *= normalize;
-				}
-
-				projected.color = Color(clipped[i].color.r * lightF, clipped[i].color.g * lightF, clipped[i].color.b * lightF, 255);
-
-				toRender.push_back(projected);
 			}
 		}
 	}
+	
 
 	//Sort triangles 
 	sort(toRender.begin(), toRender.end(), [](Triangle& t1, Triangle& t2)
@@ -184,6 +195,11 @@ void Renderer::Render()
 		}
 	}
 	window->display();
+}
+
+void Renderer::RegisterMesh(Mesh* mesh)
+{
+	visibleMesh.push_back(mesh);
 }
 
 void Renderer::UpdateMatrices()

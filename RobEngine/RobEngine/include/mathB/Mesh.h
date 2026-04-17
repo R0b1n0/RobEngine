@@ -96,6 +96,7 @@ inline bool TryGetLinePlaneIntersection(Vec3 planeP, Vec3 planeN, Vec3 lineStart
 		return false;
 
 	result = lineStart + line * t;
+	return true;
 }
 
 inline int ClipTriangleAgainstSpace(Vec3 planeP, Vec3 planeN, Triangle& in_tri, Triangle& out_tri1, Triangle& out_tri2)
