@@ -33,6 +33,9 @@
     <ClCompile Include="src\renderer\Renderer.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="include\renderer\Camera.cpp">
+      <Filter>src\renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\mathB\Matrice.h">

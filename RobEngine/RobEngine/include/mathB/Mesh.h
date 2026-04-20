@@ -53,7 +53,7 @@ struct  Mesh
 
 			char junk;
 
-			//Only consider vertices for now
+			//Lazy parsing, we only use vertex pos
 			if (line[0] == 'v' && line[1] == ' ')
 			{
 				s << line;
@@ -86,7 +86,6 @@ struct  Mesh
 				//Remove the first token
 				s >> junk;
 
-				//int tri[3]{0};
 				std::vector<int> indices{};
 				int index = 0;
 

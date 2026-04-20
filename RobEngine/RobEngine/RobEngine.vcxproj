@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\renderer\Camera.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
   </ItemGroup>

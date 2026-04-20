@@ -2,18 +2,14 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-Renderer::Renderer(sf::RenderWindow* window)
+Renderer::Renderer(unsigned int width, unsigned int height, std::string name)
 {
-	this->window = window;
-	camera = Camera(0.1f,1000.0f,50.0f, (float)window->getSize().y / (float)window->getSize().x);
+	this->window = new sf::RenderWindow(sf::VideoMode({ width,  height }), name);
+	camera = Camera(0.1f, 1000.0f, 50.0f, (float)window->getSize().y / (float)window->getSize().x);
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
 	SetRenderMode(ERenderMode::shaded);
 	UpdateMatrices();
-}
-
-Renderer::Renderer(unsigned int width, unsigned int height, std::string name) : Renderer( new sf::RenderWindow(sf::VideoMode({ width,  height }), name))
-{
 }
 
 Renderer::~Renderer()
@@ -52,7 +48,7 @@ void Renderer::Render()
 			Vec3 B = transformed.p[2] - transformed.p[0];
 			Vec3 normal = Vec3::CrossProduct(A, B).Normalize();
 
-			Vec3 cam2Vert = (transformed.p[0] - camera.cameraPos);
+			Vec3 cam2Vert = (transformed.p[0] - camera.GetPos());
 
 			//Check if the triangle is facing the camera 
 			if (Vec3::DotProduct(cam2Vert, normal) < 0.0f)
@@ -65,7 +61,7 @@ void Renderer::Render()
 				//Clip with the near plane 
 				int nClippedTriangles = 0;
 				Triangle clipped[2];
-				nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera.fNear }, { 0.0f, 0.0f, 1.0f }, viewed, clipped[0], clipped[1]);
+				nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera.FNear()}, {0.0f, 0.0f, 1.0f}, viewed, clipped[0], clipped[1]);
 
 				//Apply the rest of the algorithm for each new tri
 				for (int i = 0; i < nClippedTriangles; i++)
@@ -103,7 +99,6 @@ void Renderer::Render()
 		}
 	}
 	
-
 	//Sort triangles 
 	sort(toRender.begin(), toRender.end(), [](Triangle& t1, Triangle& t2)
 		{
@@ -204,5 +199,5 @@ void Renderer::RegisterMesh(Mesh* mesh)
 
 void Renderer::UpdateMatrices()
 {
-	matProj = Mat4x4::MakeProjectionMatrix(camera.aspectRatio, camera.fovRad, camera.fNear, camera.fFar);
+	matProj = Mat4x4::MakeProjectionMatrix(camera.AspectRatio(), camera.FovRad(), camera.FNear(), camera.FFar());
 }

@@ -11,14 +11,13 @@ class Renderer
 {
 private :
 	short renderMode;
-	sf::RenderWindow* window;
 
 	Mat4x4 matProj;
 
 	Color wireFrameColor {0,255,255};
 	Color clippedColor {255,0,255};
 
-	Vec3 dirLight{ 0,0.5f,-1 };
+	Vec3 dirLight{ 0,0.5f,1 };
 	std::vector<Mesh*> visibleMesh;
 
 public : 
@@ -30,9 +29,9 @@ public :
 		clipped = 1 << 3
 	};
 	Camera camera;
+	sf::RenderWindow* window;
 
 public : 
-	Renderer(sf::RenderWindow* window);
 	Renderer(unsigned int width, unsigned int height, std::string name);
 	~Renderer();
 	void SetRenderMode(int mode, bool state = true)
