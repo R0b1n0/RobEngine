@@ -17,6 +17,18 @@ int main()
 	
 	sf::Clock clock;
 
+	InputManager im = InputManager();
+	im.RegisterMethod(InputManager::KeyCode::E, [&](InputManager::InputState i) 
+		{
+			if (i == InputManager::InputState::Started)	
+				std::cout << "touche started \n";  
+			else if (i == InputManager::InputState::Ongoing)
+				std::cout << "touche ongoing \n";
+			else if (i == InputManager::InputState::End)
+				std::cout << "touche end \n";
+		}
+	);
+
 	while (renderer.window->isOpen())
 	{
 		sf::Vector2i mouseMovement;
@@ -48,6 +60,8 @@ int main()
 		float dt = deltaTime.asSeconds();
 		pitch += dt * mouseMovement.y / 3;
 		yawn -= dt * mouseMovement.x / 3;
+
+		im.ProcessInputs();
 
 #pragma region Process inputs
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))

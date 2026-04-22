@@ -36,6 +36,12 @@
     <ClCompile Include="include\renderer\Camera.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\InputManager.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\WinMouseInput.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\mathB\Matrice.h">
@@ -61,6 +67,12 @@
     </ClInclude>
     <ClInclude Include="include\renderer\Color.h">
       <Filter>include\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\InputManager.h">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\WinMouseInput.h">
+      <Filter>include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

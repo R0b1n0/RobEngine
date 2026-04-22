@@ -1,6 +1,7 @@
 #include "../../include/renderer/Renderer.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <Windows.h>
 
 Renderer::Renderer(unsigned int width, unsigned int height, std::string name)
 {

@@ -140,10 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\renderer\Camera.cpp" />
+    <ClCompile Include="src\core\InputManager.cpp" />
+    <ClCompile Include="src\core\WinMouseInput.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\core\InputManager.h" />
+    <ClInclude Include="include\core\WinMouseInput.h" />
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\mathB\Matrice.h" />
     <ClInclude Include="include\mathB\Mesh.h" />
