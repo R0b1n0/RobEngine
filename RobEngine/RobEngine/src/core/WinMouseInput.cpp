@@ -1,4 +1,4 @@
-#include "../../include/core/WinMouseInput.h"
+#include "core/WinMouseInput.h"
 
 WinMouseInput::WinMouseInput()
 {

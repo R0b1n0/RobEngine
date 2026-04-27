@@ -1,12 +1,11 @@
 #pragma once
-#include "Vector.h"
+#include "mathB/Vector.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 #include <vector>
-#include "../renderer/Color.h"
-
+#include "renderer/Color.h"
 
 struct Triangle
 {
@@ -113,6 +112,7 @@ struct  Mesh
 /// <returns>True if there is an intersection.</returns>
 inline bool TryGetLinePlaneIntersection(Vec3 planeP, Vec3 planeN, Vec3 lineStart, Vec3 lineEnd, Vec3& result)
 {
+	//TODO get the maths :/
 	planeN.Normalize();
 	Vec3 line = lineEnd - lineStart;
 

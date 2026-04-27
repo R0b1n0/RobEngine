@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Camera.h"
-#include "../mathB/Matrice.h"
-#include "../mathB/Mesh.h"
-#include "Color.h"
+#include "mathB/Matrice.h"
+#include "mathB/Mesh.h"
+#include "renderer/Color.h"
 
 namespace sf { class RenderWindow; }
 
 class Renderer
 {
 private :
-	short renderMode;
+	short renderMode = 0;
 
 	Mat4x4 matProj;
 
@@ -18,7 +18,7 @@ private :
 	Color clippedColor {255,0,255};
 
 	Vec3 dirLight{ 0,0.5f,1 };
-	std::vector<Mesh*> visibleMesh;
+	static std::vector<Mesh*> visibleMesh;
 
 public : 
 	enum ERenderMode
@@ -28,11 +28,12 @@ public :
 		debug = 1 << 2,
 		clipped = 1 << 3
 	};
-	Camera camera;
-	sf::RenderWindow* window;
+
+	sf::RenderWindow* window = nullptr;
+	Camera* camera;
 
 public : 
-	Renderer(unsigned int width, unsigned int height, std::string name);
+	Renderer(unsigned int height, unsigned int width, std::string name);
 	~Renderer();
 	void SetRenderMode(int mode, bool state = true)
 	{
@@ -46,9 +47,12 @@ public :
 		SetRenderMode(mode, !(renderMode & mode));
 	}
 	void Render();
-	void RegisterMesh(Mesh* mesh);
+	static void RegisterMesh(Mesh* mesh);
 
 private : 
 	void UpdateMatrices();
+	//No Copy >:(
+	Renderer(const Renderer&) = delete;
+	Renderer& operator=(const Renderer&) = delete;
 };
 

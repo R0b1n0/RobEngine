@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector.h"
+#include "mathB/Vector.h"
 #include <cmath>
 
 struct Mat4x4

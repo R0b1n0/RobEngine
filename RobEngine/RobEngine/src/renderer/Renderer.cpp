@@ -1,25 +1,52 @@
-#include "../../include/renderer/Renderer.h"
+#include "renderer/Renderer.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <Windows.h>
 
-Renderer::Renderer(unsigned int width, unsigned int height, std::string name)
+std::vector<Mesh*> Renderer::visibleMesh = {};
+
+Renderer::Renderer(unsigned int height, unsigned int width, std::string name)
 {
-	this->window = new sf::RenderWindow(sf::VideoMode({ width,  height }), name);
-	camera = Camera(0.1f, 1000.0f, 50.0f, (float)window->getSize().y / (float)window->getSize().x);
+	window = new sf::RenderWindow(sf::VideoMode({ width,  height }), name);
+
+	camera = new Camera{ 0.1f, 1000.0f, 50.0f, (float)height / (float)width };
+
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
-	SetRenderMode(ERenderMode::shaded);
+
+	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame);
 	UpdateMatrices();
 }
 
 Renderer::~Renderer()
 {
 	delete(window);
+	delete(camera);
 }
 
 void Renderer::Render()
 {
+	//TODO cut this fat-ass function ;)
+
+	//Set cursor visibility 
+	while (const std::optional event = window->pollEvent())
+	{
+		if (event->is<sf::Event::Closed>())
+			window->close();
+
+		if (event->is<sf::Event::FocusLost>())
+		{
+			window->setMouseCursorGrabbed(false);
+			window->setMouseCursorVisible(true);
+		}
+
+		if (event->is<sf::Event::FocusGained>())
+		{
+			window->setMouseCursorGrabbed(true);
+			window->setMouseCursorVisible(false);
+		}
+	}
+
 	Mat4x4 matRotZ, matRotX;
 	Mat4x4 matTranslation = Mat4x4::MakeTranslationMatrix(0.0f, 0.0f, 15.0f);
 
@@ -49,20 +76,20 @@ void Renderer::Render()
 			Vec3 B = transformed.p[2] - transformed.p[0];
 			Vec3 normal = Vec3::CrossProduct(A, B).Normalize();
 
-			Vec3 cam2Vert = (transformed.p[0] - camera.GetPos());
+			Vec3 cam2Vert = (transformed.p[0] - camera->GetPos());
 
 			//Check if the triangle is facing the camera 
 			if (Vec3::DotProduct(cam2Vert, normal) < 0.0f)
 			{
 				//Put it in view space 
-				viewed.p[0] = camera.matView.Multiply(transformed.p[0]);
-				viewed.p[1] = camera.matView.Multiply(transformed.p[1]);
-				viewed.p[2] = camera.matView.Multiply(transformed.p[2]);
+				viewed.p[0] = camera->matView.Multiply(transformed.p[0]);
+				viewed.p[1] = camera->matView.Multiply(transformed.p[1]);
+				viewed.p[2] = camera->matView.Multiply(transformed.p[2]);
 
 				//Clip with the near plane 
 				int nClippedTriangles = 0;
 				Triangle clipped[2];
-				nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera.FNear()}, {0.0f, 0.0f, 1.0f}, viewed, clipped[0], clipped[1]);
+				nClippedTriangles = ClipTriangleAgainstSpace({ 0.0f, 0.0f, camera->FNear() }, { 0.0f, 0.0f, 1.0f }, viewed, clipped[0], clipped[1]);
 
 				//Apply the rest of the algorithm for each new tri
 				for (int i = 0; i < nClippedTriangles; i++)
@@ -99,7 +126,7 @@ void Renderer::Render()
 			}
 		}
 	}
-	
+
 	//Sort triangles 
 	sort(toRender.begin(), toRender.end(), [](Triangle& t1, Triangle& t2)
 		{
@@ -200,5 +227,5 @@ void Renderer::RegisterMesh(Mesh* mesh)
 
 void Renderer::UpdateMatrices()
 {
-	matProj = Mat4x4::MakeProjectionMatrix(camera.AspectRatio(), camera.FovRad(), camera.FNear(), camera.FFar());
+	matProj = Mat4x4::MakeProjectionMatrix(camera->AspectRatio(), camera->FovRad(), camera->FNear(), camera->FFar());
 }

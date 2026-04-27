@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <functional>
-#include "WinMouseInput.h"
+#include "core/WinMouseInput.h"
 
 class InputManager
 {
@@ -89,23 +89,24 @@ public:
 		Mouse1 = 0x02,
 	};
 	enum InputState {
-		Started,
-		Ongoing,
-		End
+		Pressed,
+		Held,
+		Released
 	};
 
 private:
-	std::unordered_map<
+	static std::unordered_map<
 		KeyCode,
 		std::vector<
 		std::function<void(InputState)>>>
 		inputDependentMetthods;
 
-	std::unordered_set<KeyCode> heldKeys;
-	WinMouseInput mouseInput;
+	static std::unordered_set<KeyCode> heldKeys;
+	static WinMouseInput mouseInput;
 
 public:
-	InputManager();
-	void RegisterMethod(KeyCode keycode, std::function<void(InputState)> method);
-	void ProcessInputs();
+	InputManager() = delete;
+	~InputManager() = delete;
+	static void RegisterMethod(KeyCode keycode, std::function<void(InputState)> method);
+	static void ProcessInputs();
 };

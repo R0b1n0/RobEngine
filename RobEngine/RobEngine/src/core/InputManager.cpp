@@ -1,12 +1,17 @@
-#include "../../include/core/InputManager.h"
+#include "core/InputManager.h"
 #include <iostream>
 #include <windows.h>
 #include <string>
 
-InputManager::InputManager()
-{
-	mouseInput = {};
-}
+std::unordered_set<InputManager::KeyCode> InputManager::heldKeys = {};
+
+std::unordered_map<
+	InputManager::KeyCode,
+	std::vector<
+	std::function<void(InputManager::InputState)>>> 
+	InputManager::inputDependentMetthods = {};
+
+WinMouseInput InputManager::mouseInput = { };
 
 void InputManager::RegisterMethod(KeyCode keycode, std::function<void(InputState)> method)
 {
@@ -29,14 +34,14 @@ void InputManager::ProcessInputs()
 
 				for (std::function<void(InputState)>& method : subs.second)
 				{
-					method(InputState::Started);
+					method(InputState::Pressed);
 				}
 			}
 			else
 			{
 				for (std::function<void(InputState)>& method : subs.second)
 				{
-					method(InputState::Ongoing);
+					method(InputState::Held);
 				}
 			}
 		}
@@ -45,7 +50,7 @@ void InputManager::ProcessInputs()
 			heldKeys.erase(subs.first);
 			for (std::function<void(InputState)>& method : subs.second)
 			{
-				method(InputState::End);
+				method(InputState::Released);
 			}
 		}
 	}

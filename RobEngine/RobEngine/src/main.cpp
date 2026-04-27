@@ -1,33 +1,37 @@
-#include "../include/main.h"
+#include "main.h"
 
 int main()
 {
-	Renderer renderer = Renderer(winWidth, winHeight, "RobEngine :D");
-
+	GameState::SetWindowParameters(WindowParameters{ winWidth, winHeight, "RobEngine :D" });
+	
 	Mesh mesh = Mesh();
 	mesh.LoadFromObjectFile("assets/Models/mountains.obj");
-	renderer.RegisterMesh(&mesh);
+	Renderer::RegisterMesh(&mesh);
 
 	//Camera param
 	Vec3 cameraPos{};
 	float yawn = 0; //Lacet
 	float pitch = 0; //Tang
-	float roll = 0; //Roulis 
+	float roll = 0; //Roulis
 	float speed = 10.0f;
 	
 	sf::Clock clock;
 
-	InputManager im = InputManager();
-	im.RegisterMethod(InputManager::KeyCode::E, [&](InputManager::InputState i) 
+	InputManager::RegisterMethod(InputManager::KeyCode::E, [&](InputManager::InputState i) 
 		{
-			if (i == InputManager::InputState::Started)	
+			if (i == InputManager::InputState::Pressed)	
 				std::cout << "touche started \n";  
-			else if (i == InputManager::InputState::Ongoing)
+			else if (i == InputManager::InputState::Held)
 				std::cout << "touche ongoing \n";
-			else if (i == InputManager::InputState::End)
+			else if (i == InputManager::InputState::Released)
 				std::cout << "touche end \n";
 		}
 	);
+
+	GameState::Run();
+
+
+	Renderer renderer(winWidth, winHeight, "ignore me TT ");
 
 	while (renderer.window->isOpen())
 	{
@@ -61,38 +65,37 @@ int main()
 		pitch += dt * mouseMovement.y / 3;
 		yawn -= dt * mouseMovement.x / 3;
 
-		im.ProcessInputs();
+		InputManager::ProcessInputs();
 
 #pragma region Process inputs
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
 		{
-			cameraPos += renderer.camera.CamForward() * dt * speed;
+			cameraPos += renderer.camera->CamForward() * dt * speed;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
-			cameraPos -= renderer.camera.CamForward() * dt * speed;
+			cameraPos -= renderer.camera->CamForward() * dt * speed;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
-			cameraPos += renderer.camera.CamUp() * speed * dt;
+			cameraPos += renderer.camera->CamUp() * speed * dt;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
 		{
-			cameraPos -= renderer.camera.CamUp() * speed * dt;
+			cameraPos -= renderer.camera->CamUp() * speed * dt;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			cameraPos += renderer.camera.CamRight() * dt * speed;
+			cameraPos += renderer.camera->CamRight() * dt * speed;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
 		{
-			cameraPos -= renderer.camera.CamRight() * dt * speed;
+			cameraPos -= renderer.camera->CamRight() * dt * speed;
 		}
 #pragma endregion
 
-		renderer.camera.SetRotation(yawn, pitch, roll);
-		renderer.camera.SetPos(cameraPos);
+		renderer.camera->SetRotation(yawn, pitch, roll);
+		renderer.camera->SetPos(cameraPos);
 
-		renderer.Render();
 	}
 }

@@ -1,7 +1,9 @@
 #pragma once
-#include "../mathB/Utils.h"
-#include "../mathB/Vector.h"
-#include "../mathB/Matrice.h"
+#include "mathB/Utils.h"
+#include "mathB/Vector.h"
+#include "mathB/Matrice.h"
+#include "core/Ticker.h"
+#include <iostream>
 
 class Camera
 {
@@ -16,7 +18,7 @@ private :
 	Vec3 cameraUp{ 0,1,0 };
 
 public : 
-	Camera(float FNear = 0.1f, float FFar = 1000.0f, float Fov = 50.0f, float AspectRatio = 0) : fNear(FNear), fFar(FFar), fov(Fov), fovRad(1.0f / tanf(fov * 0.5f / 180.0f * pi)), aspectRatio(AspectRatio){}
+	Camera(float FNear = 0.1f, float FFar = 1000.0f, float Fov = 50.0f, float AspectRatio = 0);
 	
 	void SetRotation(Vec3 rotation);
 	void SetRotation(float yawn, float pitch, float roll);
