@@ -1,9 +1,13 @@
 #include "renderer/Camera.h"
 
+Camera* Camera::main = nullptr;
+
 Camera::Camera(float FNear, float FFar , float Fov , float AspectRatio ) 
 	: fNear(FNear), fFar(FFar), fov(Fov), fovRad(1.0f / tanf(Fov * 0.5f / 180.0f * pi)), aspectRatio(AspectRatio) 
 {
 	SetRotation(Vec3{ 0,0,0 });
+	if (main == nullptr)
+		main = this;
 }
 
 void Camera::SetRotation(Vec3 rotation)

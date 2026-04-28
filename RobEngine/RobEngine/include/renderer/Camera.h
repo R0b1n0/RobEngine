@@ -9,6 +9,7 @@ class Camera
 {
 public : 
 	Mat4x4 matView;
+	static Camera* main;
 
 private :
 	float fNear, fFar, fov, fovRad, aspectRatio = 0;
