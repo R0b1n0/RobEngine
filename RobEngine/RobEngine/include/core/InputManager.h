@@ -103,7 +103,7 @@ private:
 
 	static std::unordered_set<KeyCode> heldKeys;
 	static WinMouseInput mouseInput;
-
+	//TOOD Envisager une solution plus proche du new input system 
 public:
 	InputManager() = delete;
 	~InputManager() = delete;

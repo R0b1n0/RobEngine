@@ -10,19 +10,20 @@ std::vector <std::function<void(float)>> GameState::tickers = {};
 
 void GameState::Run()
 {
-	//Load shit 
+	//Load stuff 
 	running = true;
 	
 	Renderer gameWindow{ winParam.height, winParam.width, winParam.name };
 	//TODO handle the clock without SFML
 	sf::Clock clock;
 
-	//UpdateShit 
+	//Update stuff 
 	while (running)
 	{
 		float dt = clock.restart().asSeconds();
 		for (auto& tick : tickers)
 		{
+			//TODO Don't destroy while updating, wait for flush 
 			tick(dt);
 		}
 
@@ -30,7 +31,7 @@ void GameState::Run()
 		gameWindow.Render();
 	}
 
-	//Unload Shit
+	//Unload stuff
 	gameWindow.window->close();
 }
 
@@ -47,4 +48,5 @@ void GameState::RegisterTickFunction(std::function<void(float)> update)
 void GameState::CloseGame()
 {
 	running = false;
+	//TODO Vider la liste de tickers 
 }

@@ -2,11 +2,27 @@
 #include <cmath>
 struct Vec3
 {
+
+public:
 	// w helps with matrice calculation
 	float x = 0;
 	float y = 0;
 	float z = 0;
 	float w = 1;
+
+public:
+	Vec3()
+	{
+	}
+	Vec3(float t) : Vec3(t,t,t)
+	{
+	}
+	Vec3(float x, float y, float z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
 
 	Vec3 operator+(const Vec3& a)

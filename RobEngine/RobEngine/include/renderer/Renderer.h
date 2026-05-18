@@ -30,6 +30,7 @@ public :
 	};
 
 	sf::RenderWindow* window = nullptr;
+	//TODO Make it a smart pointer 
 	Camera* camera;
 
 public : 

@@ -16,21 +16,23 @@ int main()
 	float speed = 10.0f;
 	
 	sf::Clock clock;
+	
+	FirstPersonCtrl fpsCtrl;
 
 	InputManager::RegisterMethod(InputManager::KeyCode::E, [&](InputManager::InputState i) 
 		{
 			if (i == InputManager::InputState::Pressed)	
-				std::cout << "touche started \n";  
+				std::cout << "touch started \n";  
 			else if (i == InputManager::InputState::Held)
-				std::cout << "touche ongoing \n";
+				std::cout << "touch ongoing \n";
 			else if (i == InputManager::InputState::Released)
-				std::cout << "touche end \n";
+				std::cout << "touch end \n";
 		}
 	);
 
 	GameState::Run();
 
-
+	//TODO remove everything below me :O
 	Renderer renderer(winWidth, winHeight, "ignore me TT ");
 
 	while (renderer.window->isOpen())

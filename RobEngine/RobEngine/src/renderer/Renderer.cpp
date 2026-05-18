@@ -26,7 +26,7 @@ Renderer::~Renderer()
 
 void Renderer::Render()
 {
-	//TODO cut this fat-ass function ;)
+	//TODO cut this function 
 
 	//Set cursor visibility 
 	while (const std::optional event = window->pollEvent())

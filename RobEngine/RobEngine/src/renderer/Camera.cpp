@@ -24,19 +24,25 @@ void Camera::SetRotation(float yawn, float pitch, float roll)
 	lookDirection = targetRotation.Multiply(target);
 	cameraRight = targetRotation.Multiply(rightTarget);
 	cameraUp = targetRotation.Multiply(up);
-	target = cameraPos + lookDirection;
+	cameraTarget = cameraPos + lookDirection;
 
-	Mat4x4 matCamera = Mat4x4::MakePointAt(cameraPos, target, up);
-	Mat4x4 viewMatrice = Mat4x4::MatrixQuickInverse(matCamera);
-
-	matView = viewMatrice;
+	MakeMatView();
 }
 
 void Camera::SetPos(Vec3 pos)
 {
 	cameraPos = pos;
+	MakeMatView();
 }
 Vec3 Camera::GetPos() const
 {
 	return cameraPos;
+}
+
+void Camera::MakeMatView()
+{
+	Mat4x4 matCamera = Mat4x4::MakePointAt(cameraPos, cameraTarget, { 0,1,0 });
+	Mat4x4 viewMatrice = Mat4x4::MatrixQuickInverse(matCamera);
+
+	matView = viewMatrice;
 }
