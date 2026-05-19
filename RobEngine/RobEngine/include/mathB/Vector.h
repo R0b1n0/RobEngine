@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 #include <cmath>
 struct Vec3
 {
@@ -23,7 +23,6 @@ public:
 		this->y = y;
 		this->z = z;
 	}
-
 
 	Vec3 operator+(const Vec3& a)
 	{
@@ -125,6 +124,110 @@ public:
 			this->x / l,
 			this->y / l,
 			this->z / l,
+		};
+	}
+};
+
+struct Vec2
+{
+public : 
+	float x = 0;
+	float y = 0;
+
+public : 
+	Vec2()
+	{
+	}
+	Vec2(float t) : Vec2(t, t)
+	{
+	}
+	Vec2(float x, float y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	Vec2 operator+(const Vec2& a)
+	{
+		return Vec2{ x + a.x, y + a.y};
+	}
+	Vec2 operator-(const Vec2& a) const
+	{
+		return Vec2{ x - a.x, y - a.y };
+	}
+	Vec2 operator*(float const& b)
+	{
+		return {
+			x * b,
+			y * b
+		};
+	}
+	Vec2 operator/(float const& b)
+	{
+		return {
+			x / b,
+			y / b
+		};
+	}
+	Vec2 operator *=(const Vec2& v)
+	{
+		x *= v.x;
+		y *= v.y;
+
+		return *this;
+	}
+	Vec2 operator += (Vec2 const& a)
+	{
+		x += a.x;
+		y += a.y;
+		return *this;
+	}
+	Vec2 operator += (float a)
+	{
+		x += a;
+		y += a;
+		return *this;
+	}
+	Vec2 operator -= (Vec2 const& a)
+	{
+		x -= a.x;
+		y -= a.y;
+		return *this;
+	}
+	Vec2 operator -= (float a)
+	{
+		x -= a;
+		y -= a;
+		return *this;
+	}
+	Vec2 operator /= (float a)
+	{
+		x /= a;
+		y /= a;
+		return *this;
+	}
+
+	static float DotProduct(const Vec2& v1, const Vec2& v2)
+	{
+		return v1.x * v2.x + v1.y * v2.y;
+	}
+	float Length()
+	{
+		return sqrtf(DotProduct(*this, *this));
+	}
+	Vec2 Normalize()
+	{
+		float l = Length();
+		x /= l;
+		y /= l;
+		return *this;
+	}
+	Vec2 Normalized()
+	{
+		float l = Length();
+		return Vec2{
+			this->x / l,
+			this->y / l
 		};
 	}
 };

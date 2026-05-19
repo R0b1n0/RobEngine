@@ -7,6 +7,7 @@
 bool GameState::running = false;
 WindowParameters GameState::winParam = {1920, 1080, "RobEngine :D"};
 std::vector <std::function<void(float)>> GameState::tickers = {};
+std::vector<std::function<void(const std::optional<sf::Event>)>> GameState::windowEventSensitiv;
 
 void GameState::Run()
 {
@@ -20,14 +21,27 @@ void GameState::Run()
 	//Update stuff 
 	while (running)
 	{
+		//ProcessWindow events
+		while (const std::optional event = gameWindow.window->pollEvent())
+		{
+			InputManager::ProcessWindowEvents(event);
+			for (auto& winEvent : windowEventSensitiv)
+			{
+				winEvent(event);
+			}
+		}
+		InputManager::ProcessInputs();
+
 		float dt = clock.restart().asSeconds();
-		for (auto& tick : tickers)
+		for (auto& tick : tickers) 
 		{
 			//TODO Don't destroy while updating, wait for flush 
 			tick(dt);
 		}
 
-		InputManager::ProcessInputs();
+		//TODO Find a clean way to empty delta value
+		InputManager::mouseInput.delta = Vec2();
+
 		gameWindow.Render();
 	}
 
@@ -43,6 +57,11 @@ void GameState::SetWindowParameters(WindowParameters win)
 void GameState::RegisterTickFunction(std::function<void(float)> update)
 {
 	tickers.push_back(update);
+}
+
+void GameState::RegisterWindowEventFunction(std::function<void(const std::optional<sf::Event>)> windowEvent)
+{
+	windowEventSensitiv.push_back(windowEvent);
 }
 
 void GameState::CloseGame()

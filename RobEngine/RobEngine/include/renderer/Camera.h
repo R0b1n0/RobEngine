@@ -17,8 +17,10 @@ private :
 	Vec3 lookDirection{ 0,0,1 };
 	Vec3 cameraRight{ 1,0,0 };
 	Vec3 cameraUp{ 0,1,0 };
-	Vec3 cameraTarget{ 0,0,1 };
 
+	float yawn;
+	float roll;
+	float pitch;
 
 public : 
 	Camera(float FNear = 0.1f, float FFar = 1000.0f, float Fov = 50.0f, float AspectRatio = 0);

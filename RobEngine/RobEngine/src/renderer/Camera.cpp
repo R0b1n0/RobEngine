@@ -17,14 +17,9 @@ void Camera::SetRotation(Vec3 rotation)
 
 void Camera::SetRotation(float yawn, float pitch, float roll)
 {
-	Vec3 up = { 0,1,0 };
-	Vec3 target = { 0,0,1 }; //Process target from world origin
-	Vec3 rightTarget{ 1,0,0 };
-	Mat4x4 targetRotation = Mat4x4::MakeRotationMatrixX(pitch) * Mat4x4::MakeRotationMatrixY(yawn);
-	lookDirection = targetRotation.Multiply(target);
-	cameraRight = targetRotation.Multiply(rightTarget);
-	cameraUp = targetRotation.Multiply(up);
-	cameraTarget = cameraPos + lookDirection;
+	this->yawn = yawn;
+	this->pitch = pitch;
+	this->roll = roll;
 
 	MakeMatView();
 }
@@ -41,7 +36,16 @@ Vec3 Camera::GetPos() const
 
 void Camera::MakeMatView()
 {
-	Mat4x4 matCamera = Mat4x4::MakePointAt(cameraPos, cameraTarget, { 0,1,0 });
+	Vec3 up = { 0,1,0 };
+	Vec3 target = { 0,0,1 };
+	Vec3 rightTarget{ 1,0,0 };
+	Mat4x4 targetRotation = Mat4x4::MakeRotationMatrixX(pitch) * Mat4x4::MakeRotationMatrixY(yawn);
+	lookDirection = targetRotation.Multiply(target);
+	cameraRight = targetRotation.Multiply(rightTarget);
+	cameraUp = targetRotation.Multiply(up);
+	target = cameraPos + lookDirection;
+
+	Mat4x4 matCamera = Mat4x4::MakePointAt(cameraPos, target, { 0,1,0 });
 	Mat4x4 viewMatrice = Mat4x4::MatrixQuickInverse(matCamera);
 
 	matView = viewMatrice;

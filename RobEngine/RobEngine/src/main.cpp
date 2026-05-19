@@ -67,37 +67,6 @@ int main()
 		pitch += dt * mouseMovement.y / 3;
 		yawn -= dt * mouseMovement.x / 3;
 
-		InputManager::ProcessInputs();
-
-#pragma region Process inputs
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
-		{
-			cameraPos += renderer.camera->CamForward() * dt * speed;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		{
-			cameraPos -= renderer.camera->CamForward() * dt * speed;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-		{
-			cameraPos += renderer.camera->CamUp() * speed * dt;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
-		{
-			cameraPos -= renderer.camera->CamUp() * speed * dt;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		{
-			cameraPos += renderer.camera->CamRight() * dt * speed;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
-		{
-			cameraPos -= renderer.camera->CamRight() * dt * speed;
-		}
-#pragma endregion
-
 		renderer.camera->SetRotation(yawn, pitch, roll);
-		renderer.camera->SetPos(cameraPos);
-
 	}
 }

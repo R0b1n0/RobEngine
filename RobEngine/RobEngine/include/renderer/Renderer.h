@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "renderer/Camera.h"
 #include "mathB/Matrice.h"
 #include "mathB/Mesh.h"
 #include "renderer/Color.h"

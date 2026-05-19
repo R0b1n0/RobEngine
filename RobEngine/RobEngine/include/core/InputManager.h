@@ -2,8 +2,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <functional>
+#include <optional>
 #include "core/WinMouseInput.h"
 
+namespace sf { class Event; }
 class InputManager
 {
 public:
@@ -93,20 +95,22 @@ public:
 		Held,
 		Released
 	};
+	static WinMouseInput mouseInput;
 
 private:
 	static std::unordered_map<
 		KeyCode,
 		std::vector<
 		std::function<void(InputState)>>>
-		inputDependentMetthods;
+		inputDependentMethods;
 
 	static std::unordered_set<KeyCode> heldKeys;
-	static WinMouseInput mouseInput;
+	
 	//TOOD Envisager une solution plus proche du new input system 
 public:
 	InputManager() = delete;
 	~InputManager() = delete;
 	static void RegisterMethod(KeyCode keycode, std::function<void(InputState)> method);
 	static void ProcessInputs();
+	static void ProcessWindowEvents(const std::optional<sf::Event> event);
 };
