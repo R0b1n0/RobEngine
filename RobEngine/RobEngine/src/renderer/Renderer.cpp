@@ -14,7 +14,7 @@ Renderer::Renderer(unsigned int height, unsigned int width, std::string name)
 	window->setMouseCursorGrabbed(true);
 	window->setMouseCursorVisible(false);
 
-	SetRenderMode(ERenderMode::shaded + ERenderMode::wireFrame);
+	SetRenderMode(ERenderMode::shaded);
 	UpdateMatrices();
 }
 
