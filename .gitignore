@@ -34,6 +34,7 @@ cmake_install.cmake
 Makefile
 *.cmake
 !CMakeLists.txt
+!cmake/RobEngineConfig.cmake
  
 # -------------------------
 # SFML specific

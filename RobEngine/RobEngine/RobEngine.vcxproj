@@ -139,11 +139,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="include\renderer\Camera.cpp" />
+    <ClCompile Include="src\core\InputManager.cpp" />
+    <ClCompile Include="src\core\WinMouseInput.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
-    <ClInclude Include="MathB.h" />
+    <ClInclude Include="include\core\InputManager.h" />
+    <ClInclude Include="include\core\WinMouseInput.h" />
+    <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\mathB\Matrice.h" />
+    <ClInclude Include="include\mathB\Mesh.h" />
+    <ClInclude Include="include\mathB\Utils.h" />
+    <ClInclude Include="include\mathB\Vector.h" />
+    <ClInclude Include="include\renderer\Camera.h" />
+    <ClInclude Include="include\renderer\Color.h" />
+    <ClInclude Include="include\renderer\Renderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
