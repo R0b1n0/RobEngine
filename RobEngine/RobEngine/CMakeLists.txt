@@ -28,7 +28,7 @@ add_library(RobEngine STATIC ${ENGINE_SOURCES} "include/core/GameState.h" "src/c
 
 # Les headers sont dans include/, on les expose publiquement
 # PUBLIC = disponibles pour RobEngine ET pour quiconque linke RobEngine
-target_include_directories(RobEngine PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(RobEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # ─── SFML ────────────────────────────────────────────────────────
 # On cherche SFML dans le dossier voisin SFML-3.0.2
