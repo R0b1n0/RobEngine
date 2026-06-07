@@ -32,9 +32,13 @@ target_include_directories(RobEngine PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 # ─── SFML ────────────────────────────────────────────────────────
 # On cherche SFML dans le dossier voisin SFML-3.0.2
-set(SFML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../SFML-3.0.2/lib/cmake/SFML")
-set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
-find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
+include(FetchContent)
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG        3.0.0
+)
+FetchContent_MakeAvailable(SFML)
 
 # PRIVATE = SFML est un détail d'implémentation du moteur,
 # le projet consommateur n'a pas besoin de le gérer lui-même
@@ -44,11 +48,6 @@ target_link_libraries(RobEngine PUBLIC SFML::Graphics SFML::Window SFML::System)
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     add_executable(RobEngineApp src/main.cpp "include/core/GameState.h" "src/core/GameState.cpp" "include/Utils/FirstPersonCtrl.h" "src/Utils/FirstPersonCtrl.cpp")
     target_link_libraries(RobEngineApp PRIVATE RobEngine)
-
-    add_custom_command(TARGET RobEngineApp POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${SFML_DIR}/../../../bin"
-    $<TARGET_FILE_DIR:RobEngineApp>)
 
     add_custom_command(TARGET RobEngineApp POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
